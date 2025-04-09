@@ -43,7 +43,7 @@ void main() {
       candidatos.removeWhere((candidato) => candidato.nome == nomeExcluir);
     } 
     else if (opcao == '3') {
-     
+  
       if (candidatos.isEmpty) {
         print('Nenhum candidato registrado.');
         continue;
@@ -52,9 +52,20 @@ void main() {
       int totalVotos = candidatos.fold(0, (sum, candidato) => sum + candidato.votos);
       print('Candidatos      Votos   Porcentagem');
 
+
+      Candidato primeiroCandidato = candidatos.reduce((a, b) => a.votos > b.votos ? a : b);
+      double porcentagemPrimeiroCandidato = (primeiroCandidato.votos / totalVotos) * 100;
+
+  
       for (var candidato in candidatos) {
         double porcentagem = (candidato.votos / totalVotos) * 100;
         print('${candidato.nome.padRight(15)} ${candidato.votos.toString().padLeft(7)} ${porcentagem.toStringAsFixed(2).padLeft(10)}%');
+      }
+
+      if (porcentagemPrimeiroCandidato > 50) {
+        print('O candidato ${primeiroCandidato.nome} foi eleito no primeiro turno!');
+      } else {
+        print('Haverá segundo turno.');
       }
     } 
     else if (opcao == '4') {
@@ -65,5 +76,4 @@ void main() {
     else {
       print('Opção inválida, tente novamente.');
     }
-  }
-}
+  }}
